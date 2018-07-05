@@ -42,8 +42,9 @@
 					    <div class="float-right">${{getVotingValue(votingPowerGage)}}</div>
 					    <input type="range" class="slider" id="customRange1" v-model="votingPowerGage">
 				    </div>
-				    <div>
-				    	<div class="text-left">{{toFixed2(account.voting_power_sec)}}%</div>
+				    <div class="clearfix mt-2">
+				    	<div class="float-left">{{toFixed2(account.voting_power_sec)}}%</div>
+				    	<div class="float-right" v-if="account.voting_power_fullin"><small class="text-muted">full in</small> {{account.voting_power_fullin}}</div><br/>
 					    <div class="progress">
 					      <div class="progress-bar progress-bar-striped progress-bar-animated bg-info bg-opacity8" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" v-bind:style="{width:account.voting_power_sec +'%' }"></div>
 					    </div>
@@ -593,7 +594,7 @@ export default {
 				// console.log(account.voting_power_sec)
 
 		  		// console.log(fromNowYear)
-		  		// this.secTimer()
+		  		this.secTimer()
 
 		  		this.account=account
 		  	}else{
@@ -853,6 +854,19 @@ export default {
     	setInterval(()=>{ 
     		this.account.voting_power_sec = this.account.voting_power_sec +0.00023146
 		    this.account.voting_power_sec = this.account.voting_power_sec > 100 ? 100 : this.account.voting_power_sec
+
+		    if(this.account.voting_power_sec<100){
+			    let sec = (100 - this.account.voting_power_sec) / 0.00023146
+			    let min = sec/60
+			    let hour = min/60
+
+			    if(min<60){
+			    	this.account.voting_power_fullin = 	min.toFixed(0) + 'm'
+			    }else{
+			    	this.account.voting_power_fullin = 	hour.toFixed(0) + 'h'
+			    }
+		    }
+
     	}, 1000);
 
     },
