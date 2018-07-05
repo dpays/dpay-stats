@@ -1,0 +1,6 @@
+config.json
+sftp-config.json
+*.backup
+
+/dist
+/node_modules
