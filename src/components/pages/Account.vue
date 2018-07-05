@@ -2,7 +2,7 @@
 
 <div class="account container" >
 
-<div class="row" style="margin-top: -5px;margin-left: -15px">
+<div class="row" style="margin-top: -7px;margin-left: -15px">
 	<ol class="breadcrumb bg-white float-left">
 		<li class="breadcrumb-item" style="margin-top: -13px"><router-link to="/accounts">Accounts</router-link></li>
 	</ol>		
@@ -18,21 +18,21 @@
 </div>
 
 
-<div class="row" v-if="account.name" >
-	<div class="clearfix col-md-4" style="">
-		<img class="float-left" style="margin-top: -12px;width: 55px;height: 55px" :src="roboCache(account.name,80)" >
-		<h3 class="float-left" style="margin-top: 11px;margin-left: 5px"> {{account.name}}</h3>
+<div class="row" v-if="account.name" style="margin-top: -8px">
+	<div class="clearfix col-md-4" style="padding: 0rem 0.5rem">
+		<img class="float-left" style="width: 55px;height: 55px" :src="roboCache(account.name,80)" >
+		<div class="float-left" style="margin-top: 22px; margin-left: 2px; font-size: 1.5rem"> {{account.name}} <a class="font-08" :href="'https://steemit.com/@'+account.name" target="_blank">steemit</a></div>
 	</div>
 </div>
 
 
-<div class="row" style="margin-top: -5px">
-          <div class="col-md-4 mb-3"  v-if="account.name" >
+<div class="row" style="margin-top: -3px">
+          <div class="col-md-4 mb-3" style="padding: 0rem 0.5rem"  v-if="account.name" >
             <div class="bs-component">
-              <ul class="list-group">
-              	<li class="list-group-item ">
+              <ul class="list-group ">
+              	<li class="list-group-item " >
 
-					<h5 class="text-center"> {{toNumber(account.effective_sp)}} SP</h5>
+					<h5 class="text-center" > {{toNumber(account.effective_sp)}} SP</h5>
 					<div class="text-center text-muted font-weight-light2" style="margin-top:-10px"><small>{{toNumber(account.vesting_shares_sp)}} + {{toNumber(account.received_vesting_shares_sp)}} - {{toNumber(account.delegated_vesting_shares_sp)}}</small></div>
                 </li>
 
@@ -59,13 +59,35 @@
                 		<div class="text-center">{{account.repu}}</div>
                 		<div class="text-center text-muted" style="margin-top: -5px"><small>Reputation</small></div>
                 	</div>
-                  
+                </li>
+              </ul>
+
+			<ul class="list-group mt-1"  v-if="isShowMoreBtn">
+				<li class="list-group-item text-center" style="padding:0.3rem">
+					<button type="button" class="btn btn-link" style="padding:0rem" v-on:click="showMore('toggle')">Show More</button>
+                </li>
+			</ul>
+
+
+			<ul class="list-group mt-2"  v-if="!isShowMoreBtn">
+
+				<li class="list-group-item clearfix" style="padding:0.5rem" v-if="account.proxy!=''">
+                	<div class="float-left">Proxy </div>
+                	<router-link class="float-right" :to="'/@'+account.proxy">{{account.proxy}}</router-link>
+                </li>
+				<li class="list-group-item " style="padding:0.5rem" v-if="account.witnesses_voted_for>0">
+                	<div>Witness Votes <small class="text-muted">{{account.witnesses_voted_for}}</small></div>
+                	<span v-for="(value, index) in account.witness_votes"><router-link :to="'/@'+value">{{value}}</router-link>, </span>
                 </li>
 
-              </ul>
+
+			</ul>
+
+
+
             </div>
           </div>
-          <div class="col-md-8" >
+          <div class="col-md-8" style="padding: 0rem 0.5rem">
 
 				<div class="d-flex justify-content-center" style="margin-top: 20px" v-if="showSpinner && account.name">
 					<div >
@@ -77,7 +99,7 @@
 				
 
 
-            <div class="bs-component" v-if="!showSpinner">
+            <div class="bs-component" v-if="!showSpinner" >
 
 
               
@@ -147,11 +169,17 @@
 	    <a href="" style="pointer-events: none" class="float-right text-muted">@{{value[1].op[1].comment_author}}/{{toStr20(value[1].op[1].comment_permlink)}} </a>
   	</div>
 
-  	<div v-else-if="value[1].op[0]=='comment_benefactor_reward'" class="text-right ">
-  		<div class="text-account-ago">{{value.ago}}</div>
-	    <div style="margin-top: 20px">Comment Benefactor Reward <span class="text-muted"> {{toSP(value[1].op[1].reward,3)}} SP to @{{value[1].op[1].benefactor}} </span> <img class="img-robo-r" :src="roboCache(value[1].op[1].benefactor,54)" ></div>
-	    
-	    <a class="text-muted" href="" style="pointer-events: none" >/{{toStr20(value[1].op[1].permlink)}}</a>
+  	<div v-else-if="value[1].op[0]=='comment_benefactor_reward'" >
+		<div v-if="value[1].op[1].author==account.name" class="text-right">
+			<div class="text-account-ago">{{value.ago}}</div>
+		    <div style="margin-top: 20px">Benefactor Reward <span class="text-muted"> {{toSP(value[1].op[1].reward,3)}} SP <small>to</small> <router-link :to="'/@'+value[1].op[1].benefactor">{{value[1].op[1].benefactor}}</router-link></span> <img class="img-robo-r" :src="roboCache(value[1].op[1].benefactor,54)" ></div>
+		    <a class="text-muted" href="" style="pointer-events: none" >/{{toStr20(value[1].op[1].permlink)}}</a>
+		</div>
+		<div v-else>
+			<div class="text-account-ago">{{value.ago}}</div>
+		    <div style="margin-top: 20px">Benefactor Reward <span class="text-muted"> {{toSP(value[1].op[1].reward,3)}} SP <small>from</small> <router-link :to="'/@'+value[1].op[1].author">{{value[1].op[1].author}}</router-link></span> <img class="img-robo-r" :src="roboCache(value[1].op[1].author,54)" ></div>
+		    <a class="text-muted" href="" style="pointer-events: none" >/{{toStr20(value[1].op[1].permlink)}}</a>
+		</div>
   	</div>
 
 
@@ -292,12 +320,26 @@
   	</div>
 
   	<div v-else-if="value[1].op[0]=='account_create'">
-  		<div class="text-account-ago">{{value.ago}}</div>
-	    <div style="margin-top: 20px" >Account Created <small>from</small> <router-link :to="'/@'+value[1].op[1].creator">{{value[1].op[1].creator}}</router-link><img class="img-robo-r" :src="roboCache(value[1].op[1].creator,54)" ></div>
+  		<div v-if="value[1].op[1].creator==account.name" class="text-right">
+			<div class="text-account-ago">{{value.ago}}</div>
+	    	<div  style="margin-top: 20px">Account Create <router-link :to="'/@'+value[1].op[1].new_account_name">{{value[1].op[1].new_account_name}}</router-link><img class="img-robo-r" :src="roboCache(value[1].op[1].new_account_name,54)" ></div>
+		</div>
+	    <div v-else >
+	    	<div class="text-account-ago">{{value.ago}}</div>
+	  		<div >Account Create <small class="text-muted">from</small> <router-link :to="'/@'+value[1].op[1].creator">{{value[1].op[1].creator}}</router-link><img class="img-robo-r" :src="roboCache(value[1].op[1].creator,54)" ></div>
+		</div>
+
   	</div>
 
   	<div v-else-if="value[1].op[0]=='account_create_with_delegation'">
-	    <div>Account Create</div>
+		<div v-if="value[1].op[1].creator==account.name" class="text-right">
+			<div class="text-account-ago">{{value.ago}}</div>
+	    	<div  style="margin-top: 20px">Account Create <router-link :to="'/@'+value[1].op[1].new_account_name">{{value[1].op[1].new_account_name}}</router-link><img class="img-robo-r" :src="roboCache(value[1].op[1].new_account_name,54)" ></div>
+		</div>
+	    <div v-else >
+	    	<div class="text-account-ago">{{value.ago}}</div>
+	  		<div >Account Create <small class="text-muted">from</small> <router-link :to="'/@'+value[1].op[1].creator">{{value[1].op[1].creator}}</router-link><img class="img-robo-r" :src="roboCache(value[1].op[1].creator,54)" ></div>
+		</div>
   	</div>
 
 
@@ -416,6 +458,7 @@ export default {
       historyFrom : 0,
       historySizeIncrement : 180,
       pageList : [1,2,3,4,5,6,7,8],
+      isShowMoreBtn : false
 
     }
   },
@@ -434,7 +477,13 @@ export default {
 	    }
 	},
 
+	beforeDestroy: function () {
+		window.removeEventListener('resize', this.handleResize)
+	},
+
 	mounted() {
+		window.addEventListener('resize', this.handleResize)
+		this.showMore(document.documentElement.clientWidth)
 	},
 	created: function () {
 
@@ -450,6 +499,23 @@ export default {
 	},
 
   methods: {
+
+  	handleResize (event) {
+		this.showMore(document.documentElement.clientWidth)
+    },
+
+    showMore(width){
+    	
+		if(width<=767){
+			this.isShowMoreBtn = true
+		}else if(width>767){
+			this.isShowMoreBtn = false
+		}else if(width=='toggle'){
+			this.isShowMoreBtn = !this.isShowMoreBtn
+		}
+
+		console.log(this.isShowMoreBtn)
+    },
 
     getGlobalProperties(){
 
@@ -517,6 +583,12 @@ export default {
 
 		        account.voting_power_sec = account.voting_power*0.01 + (lastMinute * 0.013888)
 				account.voting_power_sec = account.voting_power_sec > 100 ? 100 : account.voting_power_sec
+
+
+				account.witnessVotes = ''
+	            for(let wit of account.witness_votes){
+	              account.witnessVotes +=  wit + ', '
+	            }
 
 				// console.log(account.voting_power_sec)
 
@@ -649,6 +721,7 @@ export default {
     pageClick(value){
     	console.log(value)
     	this.initPage(value)
+    	this.showMore(document.documentElement.clientWidth)
       // this.getUsers(value)
     },
 
