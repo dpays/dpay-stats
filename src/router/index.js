@@ -4,6 +4,9 @@ import Router from 'vue-router'
 import Accounts from '@/components/pages/Accounts'
 import Account from '@/components/pages/Account'
 
+import PostDetail from '@/components/pages/PostDetail'
+
+
 import Steem from '@/components/pages/Steem'
 import Witness from '@/components/pages/Witness'
 
@@ -39,7 +42,17 @@ export default new Router({
       path: '/@:id',
       name: 'account',
       component: Account
+    },
+    {
+      path: '/@:id/:permlink',
+      name: 'postDetail',
+      component: PostDetail
+    },
+    { path: '/:tag/@:id/:permlink', 
+      redirect: { name: 'postDetail' }
     }
+
+
 
   ]
 })

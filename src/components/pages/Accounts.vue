@@ -63,19 +63,22 @@
   <div class="card-body">
 
     <div class="row justify-content-between" style="padding: 0.1rem 1rem 0.5rem 1rem">
-      <span>
+      <div class="col-sm-6">
+        <span>
         <b>#{{value.rank}}</b>
-        <img class="pthumbnail ml-1" :src="value.profile_image" @error="imageLoadOnError(value)">
+        <img class="pthumbnail ml-1" :src="value.profile_image" onerror="this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='">
         <router-link class="ml-1" :to="'/@'+value.name"><b> {{value.name}} </b></router-link>
-      </span>
-      <span class="text-right" v-bind:class="{ 'alive-2': value.lastVoteTime>7 && value.lastVoteTime<=31, 'alive-1': value.lastVoteTime<=7, 'alive-3': value.lastVoteTime>31}"  > <a :href="'https://steemit.com/@'+value.name" target="_blank">steemit</a>  ●</span>
+        </span>
+        <span class="float-right" v-bind:class="{ 'alive-2': value.lastVoteTime>7 && value.lastVoteTime<=31, 'alive-1': value.lastVoteTime<=7, 'alive-3': value.lastVoteTime>31}"  > <a :href="'https://steemit.com/@'+value.name" target="_blank">steemit</a>  ●</span>
+        <div class="mt-2">{{value.about}}</div>
+        <div ><a :href="value.website" target="_blank">{{value.website}}</a></div>
 
+      </div>
     </div>
 
 
 
-    <p>{{value.about}}</p>
-    <p style="margin-top: -10px"><a :href="value.website" target="_blank">{{value.website}}</a></p>
+
 
     <div class="row" >
       <div class="col-sm-6" >
@@ -117,11 +120,11 @@
           </li>
 
 
-          <li v-if="value.witnesses_voted_for=='0'" class="list-group-item d-flex justify-content-between align-items-center">
+          <li v-if="value.proxy!=''" class="list-group-item d-flex justify-content-between align-items-center">
             Proxy
               <span >{{value.proxy}} </span>
           </li>
-          <li class="list-group-item d-flex justify-content-between align-items-center">
+          <li v-if="parseFloat(value.proxied)>0" class="list-group-item d-flex justify-content-between align-items-center">
             Proxied
               <span >{{value.proxied}} <small>STEEM</small></span>
           </li>
@@ -316,41 +319,31 @@ export default {
             var tempimg = 'https://steemst.com/images/steem_thumb.png';
 
             if(value.json_metadata==='' || value.json_metadata.length===2){
-                value.profile_image = tempimg;
             }else{
                 var json_metadata = JSON.parse(value.json_metadata);
 
                 if(json_metadata.profile){
-
-
-                  if(json_metadata.profile.profile_image){
-                    json_metadata.profile.profile_image = json_metadata.profile.profile_image.replace(/http:/gi, "https:"); 
-                    value.profile_image = json_metadata.profile.profile_image !== undefined? json_metadata.profile.profile_image : tempimg;
-                  }
-
-                  value.profile_image = json_metadata.profile.profile_image !== undefined? json_metadata.profile.profile_image : tempimg;
-
                   // console.log(json_metadata.profile)
-
                   value.about = json_metadata.profile.about || ''
                   value.website = json_metadata.profile.website || ''
-                }else{
-                  value.profile_image = tempimg;
                 }
             }
+
+            value.profile_image = 'https://steemitimages.com/u/'+value.name+'/avatar/small'
+
 
             value.reputation = value.num_reputation;
 
             value.witnessVotes = ''
             for(let wit of value.witness_votes){
-              value.witnessVotes += '@' + wit + ' '
+              value.witnessVotes +=  wit + ', '
             }
 
             // let delegated_vesting_shares = parseFloat(value.delegated_vesting_shares);
             let vesting_shares = parseFloat(value.vesting_shares);
             // let received_vesting_shares = parseFloat(value.received_vesting_shares);
             value.sp = vesting_shares * this.globalProperties.vestingValue;
-            value.proxy = value.proxy=='' ? '\"\"' : value.proxy
+            // value.proxy = value.proxy=='' ? '' : value.proxy
             value.proxied = (Number(value.proxied_vsf_votes[0])/1000000) * this.globalProperties.vestingValue
             value.proxied = Number(value.proxied.toFixed(0)).toLocaleString()
 
@@ -366,11 +359,6 @@ export default {
           this.allUsers = data.data
           this.users = tmpList
     },
-
-    imageLoadOnError(value){
-      value.profile_image = 'https://steemst.com/images/steem_thumb.png'
-    },
-
 
     pageClick(value){
       this.getUsers(value)

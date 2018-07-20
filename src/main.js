@@ -66,6 +66,10 @@ console.log(store.state.count) // -> 1
 
 
 
+
+
+
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

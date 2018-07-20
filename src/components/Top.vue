@@ -3,6 +3,7 @@
 <div class="" >
 
   <div class="navbar2">
+
     <router-link id="m1" to="/" v-bind:class="{ 'text-primary-mutable': $store.state.topMenu == 'steemstatus' }">STEEMST</router-link>
 
     <a href="javascript:void(0);" class="text-muted" id="m2" style="margin-left: 20px;margin-right: -5px" v-bind:class="{ 'text-primary-mutable': $store.state.topMenu == 'accounts' }" v-on:click="accountClick()">Accounts</a>

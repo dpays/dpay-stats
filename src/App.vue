@@ -26,7 +26,7 @@ export default {
 
 
     let page = localStorage.getItem('topMenu') || ''
-    console.log('page : ' + page)
+    // console.log('page : ' + page)
 
     if(this.$route.path=='/'){
       if(page=='account'){
