@@ -5,7 +5,7 @@
 
 <div class="d-flex justify-content-center" style="margin-top: 100px" v-if="showSpinner">
 	<div >
-	  <img :src="imageCache('loadingbot1','https://steemst.com/images/loadingbot.png')" style="width: 130px">
+	  <img :src="imageCache('loadingbot1','https://dpaystats.com/images/loadingbot.png')" style="width: 130px">
 	</div>
 	<div  class="sk-spinner sk-spinner-pulse position-absolute " style="margin-left: -44px;margin-top: 41px;width: 33px;height: 32px;z-index: -10"></div>
 	<div v-if="showReload">too long? <button type="button" class="btn btn-link" style="margin-top: -3px;margin-left: -5px" v-on:click="reloadClick('all')">Reload</button></div >
@@ -19,8 +19,8 @@
 	<h3 class="mt-3">{{content.title}}</h3>
 
 	<div class="mb-2">
-		<span ><router-link :to="'/@'+content.author">{{content.author}}</router-link></span> <span class="text-muted">in</span> 
-		<span >#{{content.category}}</span> 
+		<span ><router-link :to="'/@'+content.author">{{content.author}}</router-link></span> <span class="text-muted">in</span>
+		<span >#{{content.category}}</span>
 		<small class="text-account-ago">, {{content.ago}}</small>
 	</div>
 
@@ -30,7 +30,7 @@
 		<!-- <span >{{content.children}}</span>  -->
 	</div>
 	<div v-else>
-		<span>Author : <span class="text-muted">${{parseFloat(content.total_payout_value).toFixed(3)}}</span></span>, 
+		<span>Author : <span class="text-muted">${{parseFloat(content.total_payout_value).toFixed(3)}}</span></span>,
 		<span>Curator : <span class="text-muted">${{parseFloat(content.curator_payout_value)}}</span></span>
 
 		<div v-if="content.beneficiaries.length>0">
@@ -39,9 +39,9 @@
 	</div>
 
 	<div class="mt-2">
-		<span >{{content.net_votes}} votes</span> :  
+		<span >{{content.net_votes}} votes</span> :
 		<span v-for="(value, index) in content.active_votes" >
-	    	<router-link :to="'/@'+value.voter">{{value.voter}}</router-link><small class="text-muted"> (${{value.sbd}}), </small>
+	    	<router-link :to="'/@'+value.voter">{{value.voter}}</router-link><small class="text-muted"> (${{value.bbd}}), </small>
 	    </span>
 	</div>
 
@@ -112,12 +112,12 @@ export default {
 		this.$store.commit('topMenu','accounts')
 
 
-		// this.$steem.api.getAccountVotes('steemlite', function(err, result) {
+		// this.$dpay.api.getAccountVotes('dpaylite', function(err, result) {
 		// 	console.log(err, result);
 		// });
 
 
-		this.$steem.api.getActiveVotes('kstop1', '8-breed-exile-rent', function(err, result) {
+		this.$dpay.api.getActiveVotes('kstop1', '8-breed-exile-rent', function(err, result) {
 		  console.log(err, result);
 		});
 
@@ -131,7 +131,7 @@ export default {
 
   	getContent(){
   		this.showSpinner = true
-		this.$steem.api.getContent(this.$route.params.id, this.$route.params.permlink, (err, result) => {
+		this.$dpay.api.getContent(this.$route.params.id, this.$route.params.permlink, (err, result) => {
 			console.log(err, result);
 			if(result){
 
@@ -142,10 +142,10 @@ export default {
 	                return parseFloat(b.rshares) - parseFloat(a.rshares)
 	            });
 
-				// const STEEMIT_VOTE_REGENERATION_SECONDS = 5 * 60 * 60 * 24; // it takes 5 days to regenerate 100% voting power
-				// const STEEMIT_100_PERCENT = 10000
-				// const current_voting_power = STEEMIT_100_PERCENT;
-				// const vote_pct_weight = STEEMIT_100_PERCENT;
+				// const DPAY_VOTE_REGENERATION_SECONDS = 5 * 60 * 60 * 24; // it takes 5 days to regenerate 100% voting power
+				// const DPAY_100_PERCENT = 10000
+				// const current_voting_power = DPAY_100_PERCENT;
+				// const vote_pct_weight = DPAY_100_PERCENT;
 
 
 
@@ -160,7 +160,7 @@ export default {
 
 					for(let item of result.active_votes){
 			        	let percent = Number(item.rshares)/vote_rshares
-			        	item.sbd = (pending_payout_value * percent).toFixed(3)
+			        	item.bbd = (pending_payout_value * percent).toFixed(3)
 		        	}
 
 				}else{
@@ -174,7 +174,7 @@ export default {
 
 		        	for(let item of result.active_votes){
 			        	let percent = Number(item.rshares)/vote_rshares
-			        	item.sbd = (total_payout_value * percent).toFixed(3)
+			        	item.bbd = (total_payout_value * percent).toFixed(3)
 		        	}
 
 
@@ -242,7 +242,7 @@ export default {
 
 
     getGlobalProperties(){
-        this.$http.get(this.$apiserver + '/steem/cache')
+        this.$http.get(this.$apiserver + '/dpay/cache')
         .then((result) => {
             this.globalProperties = result.data
     		this.getContent()
@@ -291,7 +291,7 @@ export default {
     	if(value=='all'){
     		this.getAccounts()
     	}else{
-    		this.getAccountHistory(this.historyFrom)	
+    		this.getAccountHistory(this.historyFrom)
     	}
     },
 
@@ -302,7 +302,7 @@ export default {
 
        if(page){
 			this.page = page;
-			
+
 			if(page===1){
 				this.historyTotal = 0
 				this.historySize = 60
@@ -313,7 +313,7 @@ export default {
 				if(historyFrom<this.historySizeIncrement){
 					this.historySize = historyFrom
 				}else{
-					this.historySize = this.historySizeIncrement					
+					this.historySize = this.historySizeIncrement
 				}
 			}
         }
@@ -325,7 +325,7 @@ export default {
 
     createPageList(page){
 
-    	let index = 60  
+    	let index = 60
 
     	if(this.historyTotal<=index){
     		this.pageList = [1]
@@ -362,7 +362,7 @@ export default {
     imageCache(name,url){
 
     	let img = localStorage.getItem(name)
-    	
+
     	if(img===null){
     		img = url
 			this.saveImage2Cache(name,url)
@@ -375,7 +375,7 @@ export default {
     roboCache(name,size){
 
     	// let img = localStorage.getItem(name+size)
-    	
+
     	// if(img===null){
 
     	// 	img = 'https://robohash.org/'+name+'.png?size='+size+'x'+size
@@ -422,8 +422,8 @@ export default {
 
     startInterval(){
     	this.calFullIn()
-    	setInterval(()=>{ 
-			this.calFullIn()	
+    	setInterval(()=>{
+			this.calFullIn()
     	}, 1000);
     },
 
@@ -454,7 +454,7 @@ export default {
 
 	    powerWeight=(powerWeight+49)/50;
 
-	    let calResult=cc*powerWeight*100*this.globalProperties.reward_balance*this.globalProperties.sbd_steem_quote;
+	    let calResult=cc*powerWeight*100*this.globalProperties.reward_balance*this.globalProperties.bbd_dpay_quote;
 	    calResult = calResult.toFixed(3)
 
 

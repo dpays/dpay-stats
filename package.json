@@ -1,8 +1,8 @@
 {
-  "name": "vuesteemlite",
+  "name": "dpaystats",
   "version": "1.0.0",
-  "description": "A Vue.js project",
-  "author": "kim kwangsu <variouscafe@gmail.com>",
+  "description": "dApp for dPay Blockchain Statistics",
+  "author": "dPay Labs <labs@dpays.io>",
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
@@ -13,8 +13,8 @@
   "dependencies": {
     "axios": "^0.17.1",
     "chart.js": "^2.7.2",
+    "dpayjs": "^0.7.2",
     "moment": "^2.21.0",
-    "steem": "^0.6.7",
     "vue": "^2.5.2",
     "vue-chartjs": "^3.3.1",
     "vue-router": "^3.0.1",

@@ -1,15 +1,15 @@
 <template>
 
-<div class="steem container" >
+<div class="dpay container" >
 
 
 
 
 
 <div class="d-flex align-items-end flex-column bd-highlight mb-3" >
-  <div class="mb-1 bd-highlight">Total STEEM : {{toNumber(globalProperties.current_supply)}}</div>
-  <div class="mb-1 bd-highlight">Total SP : {{toNumber(globalProperties.total_sp)}}</div>
-  <div class="mt-auto mb-1 bd-highlight">Total SBD : {{toNumber(globalProperties.current_sbd_supply)}}</div>
+  <div class="mb-1 bd-highlight">Total BEX : {{toNumber(globalProperties.current_supply)}}</div>
+  <div class="mb-1 bd-highlight">Total BP : {{toNumber(globalProperties.total_sp)}}</div>
+  <div class="mt-auto mb-1 bd-highlight">Total BBD : {{toNumber(globalProperties.current_bbd_supply)}}</div>
 </div>
 
 
@@ -19,7 +19,7 @@
 	<div class="card-body">
 
 		<ul class="list-group" >
-          <li class="d-flex justify-content-between steem-card-title">
+          <li class="d-flex justify-content-between dpay-card-title">
               <p><b>Posting Count</b><br><small>{{postReport.post_counts[0].date}} ~ {{postReport.post_counts[postReport.post_counts.length-1].date}}</small></p>
               <span>{{toLS(postReport.post_count_max)}} </span>
           </li>
@@ -38,7 +38,7 @@
 	<div class="card-body">
 
 		<ul class="list-group" >
-          <li class="d-flex justify-content-between steem-card-title">
+          <li class="d-flex justify-content-between dpay-card-title">
               <p><b>New Accounts</b><br><small>{{userReport.account_created_counts[0].date}} ~ {{userReport.account_created_counts[userReport.account_created_counts.length-1].date}}</small></p>
               <span>{{toLS(userReport.accountCreatedCountMax)}} </span>
           </li>
@@ -55,7 +55,7 @@
 
 
 <ul class="list-group mb-2" >
-  <li class="d-flex justify-content-between steem-card-title">
+  <li class="d-flex justify-content-between dpay-card-title">
       <p></p>
       <span><small>Synced {{userReport.from_now_hour}} hours ago </small></span>
   </li>
@@ -64,15 +64,15 @@
 <div class="card mb-3" >
 	<div class="card-body">
 		<ul class="list-group" >
-          <li class="d-flex justify-content-between steem-card-title">
-              <p><b>Witness vote</b><br><small>Includes people with more than 10 steem.</small></p>
-              <span>{{toLS(userReport.totalSteem10)}} </span>
+          <li class="d-flex justify-content-between dpay-card-title">
+              <p><b>Witness vote</b><br><small>Includes people with more than 10 BEX.</small></p>
+              <span>{{toLS(userReport.totalDPay10)}} </span>
           </li>
         </ul>
 		<div>
 			<ul class="list-group" >
 	          <li class="d-flex justify-content-between progress-title">
-	              Voted : {{toLS(userReport.witnesses_voted_for_count)}}  
+	              Voted : {{toLS(userReport.witnesses_voted_for_count)}}
 	              <span>{{userReport.witnesses_voted_for_count_percent}}% </span>
 	          </li>
 	        </ul>
@@ -84,10 +84,10 @@
 		<div>
 			<ul class="list-group" >
 	          <li class="d-flex justify-content-between progress-title">
-	              Proxied : {{toLS(userReport.proxy_count)}}  
+	              Proxied : {{toLS(userReport.proxy_count)}}
 	              <span>{{userReport.proxy_count_percent}}% </span>
 	          </li>
-	        </ul> 
+	        </ul>
 			<div class="progress">
 				<div class="progress-bar progress-bar-striped bg-info" role="progressbar" aria-valuenow="10" v-bind:style="{width:userReport.proxy_count_percent +'%' }" aria-valuemin="0" aria-valuemax="100"></div>
 			</div>
@@ -96,7 +96,7 @@
 		<div>
 			<ul class="list-group" >
 	          <li class="d-flex justify-content-between progress-title">
-	              Voted+Proxied : {{toLS(userReport.total_vote_count)}}  
+	              Voted+Proxied : {{toLS(userReport.total_vote_count)}}
 	              <span>{{userReport.total_vote_percent}}% </span>
 	          </li>
 	        </ul>
@@ -115,16 +115,16 @@
 <div class="card mb-3" >
 	<div class="card-body">
 		<ul class="list-group" >
-          <li class="d-flex justify-content-between steem-card-title">
-              <p><b>STEEM</b><br><small>Includes people with more than 50 steem.</small></p>
-              <span>{{toLS(userReport.totalSteem50)}} </span>
+          <li class="d-flex justify-content-between dpay-card-title">
+              <p><b>BEX</b><br><small>Includes people with more than 50 BEX.</small></p>
+              <span>{{toLS(userReport.totalDPay50)}} </span>
           </li>
         </ul>
-		<div v-for="(value, index) in userReport.total_steem_counts" >
-		  	
+		<div v-for="(value, index) in userReport.total_dpay_counts" >
+
 		  	<ul class="list-group" >
 	          <li class="d-flex justify-content-between progress-title">
-	              <span>{{toLS(value.key)}}<small> STEEM</small> : {{toLS(value.value)}}</span>
+	              <span>{{toLS(value.key)}}<small> BEX</small> : {{toLS(value.value)}}</span>
 	              <span>{{value.percent}}% </span>
 	          </li>
 	        </ul>
@@ -139,7 +139,7 @@
 <div class="card mb-2" >
 	<div class="card-body">
 		<ul class="list-group" >
-          <li class="d-flex justify-content-between steem-card-title">
+          <li class="d-flex justify-content-between dpay-card-title">
               <p><b>Reputation</b><br><small>Includes people with a reputation of 26 or higher.</small></p>
               <span>{{toLS(userReport.reputationMax)}} </span>
           </li>
@@ -171,7 +171,7 @@ var moment = require('moment');
 
 
 export default {
-	name: 'steem',
+	name: 'dpay',
   data () {
     return {
       showSpinner : false,
@@ -193,10 +193,10 @@ export default {
 	created: function () {
 
 		localStorage.setItem('topMenu','')
-		this.$store.commit('topMenu','steemstatus')
+		this.$store.commit('topMenu','dpaystatus')
 
 		this.showSpinner = true;
-		
+
 		this.getGlobalProperties()
 		this.getPostReport();
 		this.getUserReport();
@@ -207,7 +207,7 @@ export default {
 
     getGlobalProperties(){
 
-        this.$http.get(this.$apiserver+'/steem/cache')
+        this.$http.get(this.$apiserver+'/dpay/cache')
         .then((result) => {
             this.globalProperties = result.data
         })
@@ -254,8 +254,8 @@ export default {
 
 			let data = result.data
 			let reputationMax = data.reputation_counts[data.reputation_counts.length-1].value
-			let totalSteem10 = data.total_steem_counts[data.total_steem_counts.length-1].value
-			let totalSteem50 = data.total_steem_counts[data.total_steem_counts.length-2].value
+			let totalDPay10 = data.total_dpay_counts[data.total_dpay_counts.length-1].value
+			let totalDPay50 = data.total_dpay_counts[data.total_dpay_counts.length-2].value
 
 
 			let temp_reputation_counts = []
@@ -267,14 +267,14 @@ export default {
 			}
 			data.reputation_counts = temp_reputation_counts
 
-			let temp_total_steem_counts = []
-			for(let item of data.total_steem_counts){
+			let temp_total_dpay_counts = []
+			for(let item of data.total_dpay_counts){
 				if(item.key=='100000' || item.key=='10000' || item.key=='1000' || item.key=='100'){
-					item.percent = Number((item.value / totalSteem50 * 100).toFixed(1))
-					temp_total_steem_counts.push(item)
+					item.percent = Number((item.value / totalDPay50 * 100).toFixed(1))
+					temp_total_dpay_counts.push(item)
 				}
 			}
-			data.total_steem_counts = temp_total_steem_counts
+			data.total_dpay_counts = temp_total_dpay_counts
 
 
 			let accountCreatedCountMax = 0
@@ -289,8 +289,8 @@ export default {
 			}
 
 
-			let witnesses_voted_for_count_percent = Number((data.witnesses_voted_for_count / totalSteem10 * 100).toFixed(1))
-			let proxy_count_percent = Number((data.proxy_count / totalSteem10 * 100).toFixed(1))
+			let witnesses_voted_for_count_percent = Number((data.witnesses_voted_for_count / totalDPay10 * 100).toFixed(1))
+			let proxy_count_percent = Number((data.proxy_count / totalDPay10 * 100).toFixed(1))
 
 
 			data.witnesses_voted_for_count_percent = witnesses_voted_for_count_percent
@@ -300,8 +300,8 @@ export default {
 			data.total_vote_percent = Number((witnesses_voted_for_count_percent + proxy_count_percent).toFixed(1))
 
 
-			data.totalSteem10 = totalSteem10
-			data.totalSteem50 = totalSteem50
+			data.totalDPay10 = totalDPay10
+			data.totalDPay50 = totalDPay50
 			data.reputationMax = reputationMax
 			data.accountCreatedCountMax = accountCreatedCountMax
 

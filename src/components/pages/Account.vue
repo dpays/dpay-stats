@@ -5,13 +5,13 @@
 <div class="row" style="margin-top: -7px;margin-left: -15px">
 	<ol class="breadcrumb bg-white float-left">
 		<li class="breadcrumb-item" style="margin-top: -13px"><router-link to="/accounts">Accounts</router-link></li>
-	</ol>		
+	</ol>
 </div>
 
 
 <div class="text-center " style="margin-top: 100px" v-if="!account.name">
 	<div class="sk-spinner sk-spinner-pulse mb-3"></div>
-	<div v-if="showReload">too long? 
+	<div v-if="showReload">too long?
 	<button type="button" class="btn btn-link" style="margin-top: -3px;margin-left: -5px" v-on:click="reloadClick('all')">Reload</button>
 	</div>
 </div>
@@ -20,7 +20,7 @@
 <div class="row mb-2" v-if="account.name" style="margin-top: -8px">
 	<div class="clearfix col-md-4" style="padding: 0rem 0.5rem">
 		<img class="float-left " style="width: 48px;height: 48px;border-radius: 100%" :src="roboCache(account.name,84)" onerror="this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='" >
-		<div class="float-left" style="margin-top: 5px; margin-left: 3px; font-size: 1.5rem"> {{account.name}} <a class="font-08" :href="'https://steemit.com/@'+account.name" target="_blank">steemit</a></div>
+		<div class="float-left" style="margin-top: 5px; margin-left: 3px; font-size: 1.5rem"> {{account.name}} <a class="font-08" :href="'https://dsite.io/@'+account.name" target="_blank">dSite</a></div>
 	</div>
 </div>
 
@@ -49,7 +49,7 @@
 					    </div>
 				    </div>
                 </li>
-                
+
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                 	<div class="col-md-6">
                 		<div class="text-center">{{account.age}}</div>
@@ -99,8 +99,8 @@
                 		<span class="float-right text-ago">synced {{vestingDelegatedFrom[0].synced}}</span>
                 	</div>
                 	<div v-for="(value, index) in vestingDelegatedFrom">
-                		<router-link :to="'/@'+value.name">{{value.name}}</router-link> 
-                		<span class="text-muted">: {{toSP(value.vesting_shares)}}</span> 
+                		<router-link :to="'/@'+value.name">{{value.name}}</router-link>
+                		<span class="text-muted">: {{toSP(value.vesting_shares)}}</span>
                 		<span class="float-right text-ago">{{value.ago}}</span>
                 	</div>
                 </li>
@@ -114,10 +114,10 @@
             </div>
           </div>
           <div class="col-md-8" style="padding: 0rem 0.5rem">
-<!-- 
+<!--
 				<div class="d-flex justify-content-center"  v-if="showSpinner && account.name">
 					<div >
-					  <img :src="imageCache('loadingbot1','https://steemst.com/images/loadingbot.png')" style="width: 130px">
+					  <img :src="imageCache('loadingbot1','https://dpaystats.com/images/loadingbot.png')" style="width: 130px">
 					</div>
 					<div  class="sk-spinner sk-spinner-pulse position-absolute " style="margin-left: -44px;margin-top: 41px;width: 33px;height: 32px;z-index: -10"></div>
 					<div v-if="showReload">too long? <button type="button" class="btn btn-link" style="margin-top: -3px;margin-left: -5px" v-on:click="reloadClick('history')">Reload</button></div >
@@ -133,15 +133,15 @@
             <div class="bs-component" v-if="!showSpinner" >
 
 
-              
+
             	<ul class="list-group" >
   <li class="list-group-item clearfix list-group-item-account" style="padding:0rem 0.3rem 0rem 0.3rem !important"  v-for="(value, index) in history">
 
   	<div  v-if="value[1].op[0]=='vote'">
 	    <div v-if="value[1].op[1].voter==account.name" class="text-right">
 	    	<div class="text-account-ago">{{value.ago}}</div>
-	    	<div >{{value[1].op[1].status}} <small class="text-muted">to</small> 
-	    		<router-link :to="'/@'+value[1].op[1].author">{{value[1].op[1].author}}</router-link>  
+	    	<div >{{value[1].op[1].status}} <small class="text-muted">to</small>
+	    		<router-link :to="'/@'+value[1].op[1].author">{{value[1].op[1].author}}</router-link>
 	    		<img class="img-robo-r" :src="roboCache(value[1].op[1].author,54)" onerror="this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='">
 	    	</div>
 		    <div><router-link :to="'/@'+value[1].op[1].author+'/'+value[1].op[1].permlink" >/{{toStr20(value[1].op[1].permlink)}} </router-link>
@@ -344,7 +344,7 @@
 
   	<div v-else-if="value[1].op[0]=='withdraw_vesting'" class="text-right ">
   		<div class="text-account-ago">{{value.ago}}</div>
-	    <div  >Withdraw vesting <span class="text-muted">{{toSP(value[1].op[1].vesting_shares,3)}} STEEM </span></div>
+	    <div  >Withdraw vesting <span class="text-muted">{{toSP(value[1].op[1].vesting_shares,3)}} BEX </span></div>
   	</div>
 
   	<div v-else-if="value[1].op[0]=='fill_vesting_withdraw'" class="text-right ">
@@ -368,7 +368,7 @@
 
 
   	<div v-else-if="value[1].op[0]=='comment_options'">
-    	
+
 
   		<div v-if="value[1].op[1].extensions.length==0" class="text-right ">
   			<div class="text-account-ago">{{value.ago}}</div>
@@ -431,7 +431,7 @@
 	    <div>Witness update</div>
 	    <div class="text-muted">{{value[1].op[1].url}}</div>
 	    <div class="text-muted">{{value[1].op[1].block_signing_key}}</div>
-	    <div class="text-muted">{{value[1].op[1].props.account_creation_fee}}, {{value[1].op[1].props.maximum_block_size}}, {{value[1].op[1].props.sbd_interest_rate}}</div>
+	    <div class="text-muted">{{value[1].op[1].props.account_creation_fee}}, {{value[1].op[1].props.maximum_block_size}}, {{value[1].op[1].props.bbd_interest_rate}}</div>
 	    <div class="text-muted">fee : {{value[1].op[1].fee}}</div>
   	</div>
 
@@ -461,23 +461,23 @@
 
 
     <div v-else-if="value[1].op[0]=='return_vesting_delegation'">
-  		<div class="text-account-ago ">{{value.ago}}</div>	    
+  		<div class="text-account-ago ">{{value.ago}}</div>
 	    <div>Return vesting delegation <span class="text-muted">{{toSP(value[1].op[1].vesting_shares,3)}} SP </span>	</div>
   	</div>
 
   	<div v-else>
-	    <div>don't support function name : {{value[1].op[0]}} <br/> Please send the function name to koinbot in steem.chat</div>
+	    <div>don't support function name : {{value[1].op[0]}} <br/> Please send the function name to dWeb Labs in dwebs.chat</div>
   	</div>
 
 
-  	
 
 
 
 
 
 
-	    
+
+
 
 
 
@@ -506,13 +506,13 @@
 
             </div>
           </div>
-          
+
         </div>
 
 
 
 
-<!-- 
+<!--
 <div>
   <nav aria-label="Page navigation example" style="margin-top:22px">
     <ul class="pagination justify-content-center">
@@ -610,7 +610,7 @@ export default {
   methods: {
 
   	imageLoadOnError(value){
-      value.name = 'https://steemst.com/images/steem_thumb.png'
+      value.name = 'https://dpaystats.com/images/dpay_thumb.png'
     },
 
   	handleResize (event) {
@@ -635,7 +635,7 @@ export default {
 
     getGlobalProperties(){
 
-        this.$http.get(this.$apiserver + '/steem/cache')
+        this.$http.get(this.$apiserver + '/dpay/cache')
         .then((result) => {
             this.globalProperties = result.data
             // console.log(this.globalProperties)
@@ -688,7 +688,7 @@ export default {
     },
 
     getVestingDelegations(){
-		this.$steem.api.getVestingDelegations(this.userName, '', 999, (err, result) => {
+		this.$dpay.api.getVestingDelegations(this.userName, '', 999, (err, result) => {
 			if(result){
 
 				for(let item of result){
@@ -712,7 +712,7 @@ export default {
         this.getVestingDelegatedFrom()
 
 
-		this.$steem.api.getAccounts([this.userName], (err, result)=> {
+		this.$dpay.api.getAccounts([this.userName], (err, result)=> {
 		  	if(result){
 
 		  		localStorage.setItem('accountName',this.userName)
@@ -727,7 +727,7 @@ export default {
 		        let effective_sp = vesting * this.globalProperties.vesting_value
 
 
-		        account.thumbnail = 'https://steemitimages.com/u/'+account.name+'/avatar/small'
+		        account.thumbnail = 'https://dsiteimages.com/u/'+account.name+'/avatar/small'
 
 		  		account.effective_sp = effective_sp
 		  		account.vesting_shares_sp = vesting_shares * this.globalProperties.vesting_value
@@ -743,7 +743,7 @@ export default {
 		        let fromNowYear = fromNowHour/24/365;
 
 		        account.age = fromNowYear.toFixed(1)
-		        account.repu = this.$steem.formatter.reputation(account.reputation);
+		        account.repu = this.$dpay.formatter.reputation(account.reputation);
 
 	            let lastvotetime = account.last_vote_time+'.000Z';
 	            now = new Date();
@@ -791,7 +791,7 @@ export default {
         // console.log("bandwidth % remaining", account.bandwidth_remain)
 		  		// console.log(fromNowYear)
 		  		this.account=account
-		  		
+
 		  		this.calFullIn()
 
 		  	}else{
@@ -817,7 +817,7 @@ export default {
             this.showReload = true;
         }, 2700);
 
-		this.$steem.api.getAccountHistory(this.userName, historyFrom, this.historySize, (err, result) => {
+		this.$dpay.api.getAccountHistory(this.userName, historyFrom, this.historySize, (err, result) => {
 
 			// console.log(err,result)
 
@@ -842,21 +842,21 @@ export default {
 						}else{
 							value[1].op[1].status = 'Downvote'
 						}
-					
+
 					}else if(value[1].op[0]=='claim_reward_balance'){
 
 						let text = ''
 
-						if(parseFloat(value[1].op[1].reward_steem)>0){
-							text+=value[1].op[1].reward_steem+', '
+						if(parseFloat(value[1].op[1].reward_dpay)>0){
+							text+=value[1].op[1].reward_dpay+', '
 						}
 
-						if(parseFloat(value[1].op[1].reward_sbd)>0){
-							text+=value[1].op[1].reward_sbd+', '
+						if(parseFloat(value[1].op[1].reward_bbd)>0){
+							text+=value[1].op[1].reward_bbd+', '
 						}
 
 						if(parseFloat(value[1].op[1].reward_vests)>0){
-							text+= (parseFloat(value[1].op[1].reward_vests) * this.globalProperties.vesting_value).toFixed(3)+' SP' 
+							text+= (parseFloat(value[1].op[1].reward_vests) * this.globalProperties.vesting_value).toFixed(3)+' SP'
 						}
 
 						value[1].op[1].text = text
@@ -871,16 +871,16 @@ export default {
 
 						let text = ''
 
-						if(parseFloat(value[1].op[1].steem_payout)>0){
-							text+=value[1].op[1].steem_payout+', '
+						if(parseFloat(value[1].op[1].dpay_payout)>0){
+							text+=value[1].op[1].dpay_payout+', '
 						}
 
-						if(parseFloat(value[1].op[1].sbd_payout)>0){
-							text+=value[1].op[1].sbd_payout+', '
+						if(parseFloat(value[1].op[1].bbd_payout)>0){
+							text+=value[1].op[1].bbd_payout+', '
 						}
 
 						if(parseFloat(value[1].op[1].vesting_payout)>0){
-							text+= (parseFloat(value[1].op[1].vesting_payout) * this.globalProperties.vesting_value).toFixed(3)+'SP' 
+							text+= (parseFloat(value[1].op[1].vesting_payout) * this.globalProperties.vesting_value).toFixed(3)+'SP'
 						}
 
 						value[1].op[1].text = text
@@ -912,7 +912,7 @@ export default {
     	if(value=='all'){
     		this.getAccounts()
     	}else{
-    		this.getAccountHistory(this.historyFrom)	
+    		this.getAccountHistory(this.historyFrom)
     	}
     },
 
@@ -929,7 +929,7 @@ export default {
 
        if(page){
 			this.page = page;
-			
+
 			if(page===1){
 				this.historyTotal = 0
 				this.historySize = 60
@@ -940,7 +940,7 @@ export default {
 				if(historyFrom<this.historySizeIncrement){
 					this.historySize = historyFrom
 				}else{
-					this.historySize = this.historySizeIncrement					
+					this.historySize = this.historySizeIncrement
 				}
 			}
         }
@@ -952,7 +952,7 @@ export default {
 
     createPageList(page){
 
-    	let index = 60  
+    	let index = 60
 
     	if(this.historyTotal<=index){
     		this.pageList = [1]
@@ -989,7 +989,7 @@ export default {
     imageCache(name,url){
 
     	let img = localStorage.getItem(name)
-    	
+
     	if(img===null){
     		img = url
 			this.saveImage2Cache(name,url)
@@ -1002,7 +1002,7 @@ export default {
     roboCache(name,size){
 
     	// let img = localStorage.getItem(name+size)
-    	
+
     	// if(img===null){
 
     	// 	img = 'https://robohash.org/'+name+'.png?size='+size+'x'+size
@@ -1021,7 +1021,7 @@ export default {
     	// return img
 
 
-    	let img = 'https://steemitimages.com/u/'+name+'/avatar/small'
+    	let img = 'https://dsiteimages.com/u/'+name+'/avatar/small'
 
   //   	let img = 'https://robohash.org/'+name+'.png?size=38x38'
 		// if(size==54){
@@ -1051,8 +1051,8 @@ export default {
 
 
     startInterval(){
-    	setInterval(()=>{ 
-			this.calFullIn()	
+    	setInterval(()=>{
+			this.calFullIn()
     	}, 1000);
     },
 
@@ -1081,7 +1081,7 @@ export default {
 
 	    powerWeight=(powerWeight+49)/50;
 
-	    let calResult=cc*powerWeight*100*this.globalProperties.reward_balance*this.globalProperties.sbd_steem_quote;
+	    let calResult=cc*powerWeight*100*this.globalProperties.reward_balance*this.globalProperties.bbd_dpay_quote;
 	    calResult = calResult.toFixed(3)
 
 

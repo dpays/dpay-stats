@@ -9,7 +9,7 @@ import axios from 'axios'
 // import VueLazyload from 'vue-lazyload'
 
 
-import steem from 'steem'
+import dpay from 'dpayjs'
 
 // only import the icons you use to reduce bundle size
 // import 'vue-awesome/icons/flag'
@@ -19,7 +19,7 @@ import steem from 'steem'
 
 // globally (in your main .js file)
 
-steem.api.setOptions({ url: 'https://api.steemit.com' });
+dpay.api.setOptions({ url: 'wss://dpayd.dpays.io' });
 
 
 
@@ -29,9 +29,9 @@ Vue.config.productionTip = false
 
 Vue.prototype.$http = axios
 Vue.prototype.$bus = bus
-Vue.prototype.$steem = steem
+Vue.prototype.$dpay = dpay
 
-Vue.prototype.$apiserver = 'https://steemlite.cafe24.com'
+Vue.prototype.$apiserver = 'https://rest.dpays.io'
 
 
 
@@ -44,7 +44,7 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   state: {
     count: 0,
-    topMenu:'steemstatus'
+    topMenu:'dpaystatus'
   },
   mutations: {
     increment (state) {

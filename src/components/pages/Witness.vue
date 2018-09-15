@@ -7,7 +7,7 @@
 
 
 <ul class="list-group mb-2" >
-  <li class="d-flex justify-content-between steem-card-title">
+  <li class="d-flex justify-content-between dpay-card-title">
       <p>Active witness : {{global.active_count}}</p>
       <span><small>synced {{global.synced_m}} minute ago </small></span>
   </li>
@@ -31,21 +31,21 @@
     </tr>
   </thead>
   <tbody>
-    
+
     <tr v-bind:class="{ 'witness_disabled': !value.active }"  v-for="(value, index) in witness">
       <td style="padding:0.3rem 0.5rem 0.3rem 0rem"><b>{{value.active_rank}}</b></td>
       <td  style="padding:0.3rem 1.1rem 0.3rem 0rem">{{value.owner}}</td>
       <td class="text-right" style="padding:0.3rem 1.1rem 0.3rem 0rem">{{toLS(value.votes_sp)}}<small v-if="value.active"><br/>{{value.votes_sp_percent}}%</small></td>
       <td class="text-right" style="padding:0.3rem 1.1rem 0.3rem 0rem">{{value.last_confirmed_block_num}}<span v-bind:class="{ 'alive-2': value.last_confirmed_block_h>0.1 && value.last_confirmed_block_h<=1, 'alive-1': value.last_confirmed_block_h<=0.1}" v-if="value.active"><br/>{{value.last_confirmed_block_h}}<small>h</small></span></td>
-      <td class="text-right" style="padding:0.3rem 1.1rem 0.3rem 0rem">${{parseFloat(value.sbd_exchange_rate.base)}}<span v-bind:class="{ 'alive-1': value.last_sbd_exchange_update_h<=2}" v-if="value.active"><br/>{{value.last_sbd_exchange_update_h}}<small>h</small></span></td>
+      <td class="text-right" style="padding:0.3rem 1.1rem 0.3rem 0rem">${{parseFloat(value.bbd_exchange_rate.base)}}<span v-bind:class="{ 'alive-1': value.last_bbd_exchange_update_h<=2}" v-if="value.active"><br/>{{value.last_bbd_exchange_update_h}}<small>h</small></span></td>
       <td class="text-right" style="padding:0.3rem 1.1rem 0.3rem 0rem">{{value.total_missed}}</td>
 
 
       <td class="text-right" style="padding:0.3rem 0rem">{{value.running_version}}</td>
     </tr>
-    
+
   </tbody>
-</table> 
+</table>
 
 
 
@@ -122,15 +122,15 @@ export default {
 				// item.percent = 0
 				item.votes_sp_percent = Number((item.votes_sp / data.global.total_sp * 100).toFixed(1))
 		        let now = new Date(data.global.time);
-		        let createdTime = new Date(item.last_sbd_exchange_update);
+		        let createdTime = new Date(item.last_bbd_exchange_update);
 		        let difference = now.getTime() - createdTime.getTime();
 		        let calSecond = Math.floor(difference/1000);
 		        let fromNowHour = calSecond/60/60;
 
 		        fromNowHour = Number(fromNowHour.toFixed(1))
-		        item.last_sbd_exchange_update_h = fromNowHour
+		        item.last_bbd_exchange_update_h = fromNowHour
 
-				let version_num = item.running_version.replace(/\./gi, ""); 
+				let version_num = item.running_version.replace(/\./gi, "");
 				version_num = Number(version_num)
 
 				if(version_num<=194){

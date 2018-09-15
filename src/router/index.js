@@ -7,7 +7,7 @@ import Account from '@/components/pages/Account'
 import PostDetail from '@/components/pages/PostDetail'
 
 
-import Steem from '@/components/pages/Steem'
+import DPay from '@/components/pages/DPay'
 import Witness from '@/components/pages/Witness'
 
 
@@ -20,13 +20,13 @@ const User = {
 }
 
 export default new Router({
-  mode: 'history', 
+  mode: 'history',
   routes: [
 
 	{
       path: '/',
-      name: 'steem',
-      component: Steem
+      name: 'dpay',
+      component: DPay
     },
     {
       path: '/accounts',
@@ -48,7 +48,7 @@ export default new Router({
       name: 'postDetail',
       component: PostDetail
     },
-    { path: '/:tag/@:id/:permlink', 
+    { path: '/:tag/@:id/:permlink',
       redirect: { name: 'postDetail' }
     }
 

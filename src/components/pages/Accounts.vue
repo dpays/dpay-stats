@@ -4,7 +4,7 @@
 
 
 <ul class="list-group mb-2" >
-  <li class="d-flex justify-content-between steem-card-title">
+  <li class="d-flex justify-content-between dpay-card-title">
       <p></p>
       <span><small>Synced daily.</small></span>
   </li>
@@ -18,8 +18,8 @@
         Sort By
         <div class="form-group">
           <select class="custom-select" v-model="sortBy" v-on:change="sortByChange">
-            <option value="total_steem"  >Total STEEM</option>
-            <option value="active_steem" >Effective SP</option>
+            <option value="total_dpay"  >Total BEX</option>
+            <option value="active_dpay" >Effective BP</option>
             <option value="num_reputation" >Reputation</option>
           </select>
         </div>
@@ -43,11 +43,11 @@
             Accounts
             <div class="text-right">
 
-              <span>{{ toLS(accountCount.block_user_count)}} <small>steem</small></span><br/>
+              <span>{{ toLS(accountCount.block_user_count)}} <small>BEX</small></span><br/>
               <span>{{ toLS(accountCount.db_user_count)}} <small>status</small></span>
             </div>
           </li>
-        </ul>  
+        </ul>
       </div>
     </div>
   </div>
@@ -69,7 +69,7 @@
         <img class="pthumbnail ml-1" :src="value.profile_image" onerror="this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='">
         <router-link class="ml-1" :to="'/@'+value.name"><b> {{value.name}} </b></router-link>
         </span>
-        <span class="float-right" v-bind:class="{ 'alive-2': value.lastVoteTime>7 && value.lastVoteTime<=31, 'alive-1': value.lastVoteTime<=7, 'alive-3': value.lastVoteTime>31}"  > <a :href="'https://steemit.com/@'+value.name" target="_blank">steemit</a>  ●</span>
+        <span class="float-right" v-bind:class="{ 'alive-2': value.lastVoteTime>7 && value.lastVoteTime<=31, 'alive-1': value.lastVoteTime<=7, 'alive-3': value.lastVoteTime>31}"  > <a :href="'https://dsite.io/@'+value.name" target="_blank">dSite</a>  ●</span>
         <div class="mt-2">{{value.about}}</div>
         <div ><a :href="value.website" target="_blank">{{value.website}}</a></div>
 
@@ -86,16 +86,16 @@
           <li class="list-group-item d-flex justify-content-between align-items-center " >
             Calculated
             <div class="text-right">
-              <span>{{ toLS(toFixed0(value.total_steem))}} <small>STEEM (total)</small></span><br/>
-              <span>{{ toNumber(value.active_steem)}} <small>SP (effective)</small></span>
+              <span>{{ toLS(toFixed0(value.total_dpay))}} <small>BEX (total)</small></span><br/>
+              <span>{{ toNumber(value.active_dpay)}} <small>SP (effective)</small></span>
             </div>
           </li>
           <li class="list-group-item d-flex justify-content-between align-items-center">
             Balances
             <div class="text-right">
-              <span>{{ toNumber(value.balance)}} <small>STEEM</small></span><br/>
-              <span>{{ toNumber(value.sp)}} <small>SP</small></span><br/>
-              <span>{{ toNumber(value.sbd_balance)}} <small>SBD</small></span>
+              <span>{{ toNumber(value.balance)}} <small>BEX</small></span><br/>
+              <span>{{ toNumber(value.sp)}} <small>BP</small></span><br/>
+              <span>{{ toNumber(value.bbd_balance)}} <small>BBD</small></span>
             </div>
           </li>
           <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -106,7 +106,7 @@
               Created
               <span>{{ value.created}} </span>
           </li>
-        </ul>  
+        </ul>
       </div>
       <div class="col-sm-6" >
         <ul class="list-group">
@@ -126,11 +126,11 @@
           </li>
           <li v-if="parseFloat(value.proxied)>0" class="list-group-item d-flex justify-content-between align-items-center">
             Proxied
-              <span >{{value.proxied}} <small>STEEM</small></span>
+              <span >{{value.proxied}} <small>BEX</small></span>
           </li>
 
 
-        </ul>  
+        </ul>
       </div>
     </div>
   </div>
@@ -167,7 +167,7 @@ export default {
       users : [],
       page : 1,
       pageList : [1,2,3,4,5],
-      sortBy : 'total_steem',
+      sortBy : 'total_dpay',
       userName : '',
       showSpinner : false,
       globalProperties : {vestingValue:0},
@@ -194,7 +194,7 @@ export default {
     this.$store.commit('topMenu','accounts')
 
 
-    this.sortBy = localStorage.getItem('sortBy') || 'total_steem'
+    this.sortBy = localStorage.getItem('sortBy') || 'total_dpay'
     this.showSpinner = true;
 
     this.getGlobalProperties();
@@ -206,11 +206,11 @@ export default {
 
     getGlobalProperties(){
 
-        this.$http.get(this.$apiserver + '/steem/cache')
+        this.$http.get(this.$apiserver + '/dpay/cache')
         .then((result) => {
             this.globalProperties.time = result.data.time
             this.globalProperties.vestingValue =  result.data.vesting_value
-          
+
             this.getUsers(1);
 
 
@@ -300,7 +300,7 @@ export default {
             this.getUsers()
       })
       .catch(error => {
-      });      
+      });
     },
 
 
@@ -316,7 +316,7 @@ export default {
 
             // console.log(value)
 
-            var tempimg = 'https://steemst.com/images/steem_thumb.png';
+            var tempimg = 'https://dpaystats.com/images/dpay_thumb.png';
 
             if(value.json_metadata==='' || value.json_metadata.length===2){
             }else{
@@ -329,7 +329,7 @@ export default {
                 }
             }
 
-            value.profile_image = 'https://steemitimages.com/u/'+value.name+'/avatar/small'
+            value.profile_image = 'https://dsiteimages.com/u/'+value.name+'/avatar/small'
 
 
             value.reputation = value.num_reputation;
@@ -353,7 +353,7 @@ export default {
               tmpList.push(value)
             }
 
-            
+
           }
 
           this.allUsers = data.data
@@ -386,8 +386,8 @@ export default {
       }else{
         this.getUsers(1)
       }
-      
-      
+
+
     },
 
     nameKeyup(){
@@ -420,7 +420,7 @@ export default {
       })
       .catch(error => {
         this.showSpinner = false;
-      });   
+      });
 
     },
 
